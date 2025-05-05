@@ -1,0 +1,7 @@
+{
+  "name": "feed-me",
+  "version": "1.0.0",
+  "description": "Feed Me - Meal Planning Assistant",
+  "main": "index.html",
+  "type": "module"
+}

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Feed Me - Seu assistente pessoal para planejamento de refeições">
+    <meta name="keywords" content="refeições, planejamento alimentar, dispensa, lista de compras">
+    <title>Feed Me</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Feed Me</h1>
+      <button id="loginBtn" class="login-btn">Configurações</button>
+    </header>
+    
+    <div class="button-container">
+      <button id="specBtn">Especificações</button>
+      <button id="addBtn">Adicionar</button>
+      <button id="pantryBtn">Dispensa</button>
+      <button>Historico</button>
+      <button id="shoppingListBtn">Lista de Compras</button>
+    </div>
+    
+    <div id="formContainer" class="form-container hidden">
+      <h2>Especificações</h2>
+      <form id="mealForm">
+        <div class="form-group inline">
+          <label for="mealType">Tipo de Refeição:</label>
+          <select id="mealType" name="mealType" required>
+            <option value="">Selecione o tipo</option>
+            <option value="cafe">Café da Manhã</option>
+            <option value="lancheManha">Lanche da Manhã</option>
+            <option value="almoco">Almoço</option>
+            <option value="lancheTarde">Lanche da Tarde</option>
+            <option value="jantar">Jantar</option>
+            <option value="lancheNoite">Lanche da Noite</option>
+          </select>
+        </div>
+        
+        <div class="form-group inline">
+          <label for="avgCalories">Média de Calorias:</label>
+          <input type="number" id="avgCalories" name="avgCalories" min="0">
+        </div>
+
+        <div class="form-group inline">
+          <label for="avgCarbs">Média de Carboidratos (g):</label>
+          <input type="number" id="avgCarbs" name="avgCarbs" min="0">
+        </div>
+
+        <div class="form-group inline">
+          <label for="avgProtein">Média de Proteína (g):</label>
+          <input type="number" id="avgProtein" name="avgProtein" min="0">
+        </div>
+
+        <div class="form-group">
+          <label for="ingredient">Ingredientes Desejados:</label>
+          <div class="ingredient-input-container">
+            <input type="text" id="ingredient" name="ingredient" placeholder="Digite um ingrediente">
+            <button type="button" id="addIngredientBtn">Adicionar</button>
+          </div>
+          <div id="ingredientsList" class="ingredients-list"></div>
+        </div>
+        
+        <button type="submit">Enviar</button>
+      </form>
+      <button id="prepareRecipeBtn" class="prepare-recipe-btn hidden">Preparar Receita</button>
+    </div>
+
+    <div id="addItemsContainer" class="form-container hidden">
+      <h2>Adicionar Itens</h2>
+      <form id="addItemsForm">
+        <div class="form-group inline">
+          <label for="itemName">Qual o item:</label>
+          <input type="text" id="itemName" name="itemName" required>
+        </div>
+        
+        <div class="form-group inline">
+          <label for="itemQuantity">Quantos foram:</label>
+          <input type="number" id="itemQuantity" name="itemQuantity" required min="1">
+        </div>
+
+        <div class="form-group inline">
+          <label for="itemUnit">Unidade de medida:</label>
+          <select id="itemUnit" name="itemUnit" required>
+            <option value="unidade" selected>Unidade(s)</option>
+            <option value="kg">Quilograma (kg)</option>
+            <option value="g">Grama (g)</option>
+            <option value="l">Litro (L)</option>
+            <option value="ml">Mililitro (ml)</option>
+            <option value="pacote">Pacote(s)</option>
+            <option value="caixa">Caixa(s)</option>
+          </select>
+        </div>
+        
+        <button type="submit">Adicionar à Lista</button>
+      </form>
+    </div>
+
+    <div id="pantryContainer" class="form-container hidden">
+      <h2>Sua Dispensa</h2>
+      <div class="items-list">
+        <ul></ul>
+      </div>
+      <div id="undoContainer" class="undo-container hidden">
+        <span>Item removido!</span>
+        <button id="undoButton">Desfazer</button>
+      </div>
+    </div>
+
+    <div id="shoppingListContainer" class="form-container hidden">
+      <h2>Lista de Compras</h2>
+      <div class="items-list">
+        <ul></ul>
+      </div>
+    </div>
+    
+    <div id="authModal" class="modal hidden">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <div id="loginView">
+          <h2>Login</h2>
+          <form id="loginForm" class="auth-form">
+            <div class="form-group">
+              <label for="loginEmail">Email:</label>
+              <input type="email" id="loginEmail" required>
+            </div>
+            <div class="form-group">
+              <label for="loginPassword">Senha:</label>
+              <input type="password" id="loginPassword" required>
+            </div>
+            <button type="submit">Entrar</button>
+          </form>
+          <div class="auth-switch">
+            <button id="showSignupBtn" class="switch-btn">Criar nova conta</button>
+          </div>
+        </div>
+
+        <div id="signupView" class="hidden">
+          <h2>Criar Conta</h2>
+          <form id="signupForm" class="auth-form">
+            <div class="form-group">
+              <label for="signupName">Nome:</label>
+              <input type="text" id="signupName" required>
+            </div>
+            <div class="form-group">
+              <label for="signupEmail">Email:</label>
+              <input type="email" id="signupEmail" required>
+            </div>
+            <div class="form-group">
+              <label for="signupPassword">Senha:</label>
+              <input type="password" id="signupPassword" required>
+            </div>
+            <div class="form-group">
+              <label for="signupPasswordConfirm">Confirmar Senha:</label>
+              <input type="password" id="signupPasswordConfirm" required>
+            </div>
+            <div id="passwordMismatch" class="error-message hidden">As senhas não correspondem</div>
+            <button type="submit">Criar Conta</button>
+          </form>
+          <div class="auth-switch">
+            <button id="showLoginBtn" class="switch-btn">Voltar para login</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="userModal" class="modal hidden">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Configurações</h2>
+        <div class="user-info">
+          <p id="userEmail"></p>
+          <div class="settings-section">
+            <button id="changePasswordBtn" class="settings-btn">Alterar Senha</button>
+          </div>
+          <div class="settings-divider"></div>
+          <button id="logoutBtn" class="danger-btn">Sair</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="changePasswordModal" class="modal hidden">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Alterar Senha</h2>
+        <form id="changePasswordForm" class="auth-form">
+          <div class="form-group">
+            <label for="currentPassword">Senha Atual:</label>
+            <input type="password" id="currentPassword" required>
+          </div>
+          <div class="form-group">
+            <label for="newPassword">Nova Senha:</label>
+            <input type="password" id="newPassword" required>
+          </div>
+          <div class="form-group">
+            <label for="confirmNewPassword">Confirmar Nova Senha:</label>
+            <input type="password" id="confirmNewPassword" required>
+          </div>
+          <div id="passwordChangeError" class="error-message hidden">As senhas não correspondem</div>
+          <button type="submit">Alterar Senha</button>
+        </form>
+      </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+  </body>
+</html>
