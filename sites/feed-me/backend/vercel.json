@@ -1,7 +1,11 @@
 {
   "version": 2,
-  "framework": "node",
-  "outputDirectory": "dist",
+  "builds": [
+    {
+      "src": "src/app.ts",
+      "use": "@vercel/node"
+    }
+  ],
   "routes": [
     {
       "src": "/(.*)",
